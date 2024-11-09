@@ -367,17 +367,4 @@
     -   현재 날짜와 시간을 가져오려면 `camp.nextstep.edu.missionutils.DateTimes`의 `now()`를 활용한다.
     -   사용자가 입력하는 값은 `camp.nextstep.edu.missionutils.Console`의 `readLine()`을 활용한다.
 
--   뒤로가기
--   준비 중
 
-[![우아한테크코스 로고](https://apply.techcourse.co.kr/assets/logo/logo_full_light.png)](https://woowacourse.github.io/)
-
-[](https://github.com/woowacourse/)[](https://www.youtube.com/channel/UC-mOekGSesms0agFntnQang/featured?view_as=subscribe)[](https://instagram.com/wooteco?igshid=YmMyMTA2M2Y)
-
-Copyright 우아한테크코스. All rights reserved.
-
-[
-
-문의하기
-
-](https://pf.kakao.com/_budWj)
