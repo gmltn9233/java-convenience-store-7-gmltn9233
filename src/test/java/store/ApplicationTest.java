@@ -5,7 +5,6 @@ import static camp.nextstep.edu.missionutils.test.Assertions.assertSimpleTest;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import camp.nextstep.edu.missionutils.test.NsTest;
-import java.io.IOException;
 import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 
@@ -58,6 +57,14 @@ class ApplicationTest extends NsTest {
         assertSimpleTest(() -> {
             runException("[컵라면-12]", "N", "N");
             assertThat(output()).contains("[ERROR] 재고 수량을 초과하여 구매할 수 없습니다. 다시 입력해 주세요.");
+        });
+    }
+
+    @Test
+    void 멤버십_최대_할인_테스트() {
+        assertSimpleTest(() -> {
+            run("[정식도시락-8]", "Y", "N");
+            assertThat(output().replaceAll("\\s", "")).contains("멤버십할인-8,000");
         });
     }
 
