@@ -367,4 +367,9 @@
     -   현재 날짜와 시간을 가져오려면 `camp.nextstep.edu.missionutils.DateTimes`의 `now()`를 활용한다.
     -   사용자가 입력하는 값은 `camp.nextstep.edu.missionutils.Console`의 `readLine()`을 활용한다.
 
+## 구현 객체
 
+### Product
+* name
+* price
+Product 객체는 제품의 이름과 가격을 멤버로 가진다.
