@@ -10,4 +10,13 @@ public class Order {
         this.product = product;
         this.purchaseQuantity = purchaseQuantity;
     }
+
+    public Product getProduct() {
+        return this.product;
+    }
+
+    public int getPurchaseQuantity() {
+        return this.purchaseQuantity;
+    }
+
 }

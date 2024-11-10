@@ -10,4 +10,23 @@ public class Promotion {
         this.promotionDetails = promotionDetails;
         this.promotionTime = promotionTime;
     }
+
+    public int getPromotionBenefit(int purchaseQuantity) {
+        if (promotionTime.validatePurchaseTime()) {
+            return promotionDetails.getPromotionBonus(purchaseQuantity);
+        }
+        return 0;
+    }
+
+    public int getCriteria() {
+        return promotionDetails.getCriteria();
+    }
+
+    public boolean isEligible(int purchaseQuantity) {
+        return promotionDetails.isEligible(purchaseQuantity);
+    }
+
+    public String getName() {
+        return name;
+    }
 }
