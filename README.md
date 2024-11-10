@@ -370,6 +370,10 @@
 ## 구현 객체
 
 ### Product
-* name
-* price
 Product 객체는 제품의 이름과 가격을 멤버로 가진다.
+
+### Inventory
+Inventory 객체는 프로모션 수량과 일반 수량을 멤버로 가진다.
+
+### StoreInventory
+StoreInventory 객체는 Product를 key로, Inventory를 value로 하는 Map을 멤버로 가진다.
