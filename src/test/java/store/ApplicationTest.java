@@ -68,6 +68,14 @@ class ApplicationTest extends NsTest {
         });
     }
 
+    @Test
+    void 프로모션_재고_부족_테스트() {
+        assertSimpleTest(() -> {
+            run("[콜라-12]", "Y", "N", "N");
+            assertThat(output()).contains("현재 콜라 3개는 프로모션 할인이 적용되지 않습니다. 그래도 구매하시겠습니까? (Y/N)");
+        });
+    }
+
     @Override
     public void runMain() {
         Application.main(new String[]{});
