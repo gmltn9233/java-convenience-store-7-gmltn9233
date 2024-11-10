@@ -76,6 +76,14 @@ class ApplicationTest extends NsTest {
         });
     }
 
+    @Test
+    void 프로모션_재고_선택_테스트() {
+        assertSimpleTest(() -> {
+            run("[초코바-1]", "Y", "N", "N");
+            assertThat(output()).contains("현재 초코바은(는) 1개를 무료로 더 받을 수 있습니다. 추가하시겠습니까? (Y/N)");
+        });
+    }
+
     @Override
     public void runMain() {
         Application.main(new String[]{});
