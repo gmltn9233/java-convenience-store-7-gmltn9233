@@ -5,7 +5,7 @@ import store.dto.response.ReceiptResponse.OrderDetail;
 
 public class Order {
     private final Product product;
-    private final int purchaseQuantity;
+    private int purchaseQuantity;
 
     public Order(Product product, int purchaseQuantity) {
         this.product = product;
@@ -14,6 +14,10 @@ public class Order {
 
     public Product getProduct() {
         return this.product;
+    }
+
+    public void plusQuantity(int quantity) {
+        this.purchaseQuantity += quantity;
     }
 
     public int getPurchaseQuantity() {

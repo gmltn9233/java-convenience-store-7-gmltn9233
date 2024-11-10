@@ -22,6 +22,10 @@ public class Promotion {
         return promotionDetails.getCriteria();
     }
 
+    public int canGift(int purchaseQuantity) {
+        return promotionDetails.canGift(purchaseQuantity);
+    }
+
     public boolean isEligible(int purchaseQuantity) {
         return promotionDetails.isEligible(purchaseQuantity);
     }

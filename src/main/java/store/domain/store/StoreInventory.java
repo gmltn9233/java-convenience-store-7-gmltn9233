@@ -8,6 +8,7 @@ import store.common.exception.ErrorMessage;
 import store.common.exception.InvalidOrderException;
 import store.common.exception.StoreException;
 import store.domain.order.Order;
+import store.domain.promotion.Promotion;
 import store.domain.promotion.PromotionManager;
 import store.dto.request.YesNoRequest;
 import store.dto.response.StoreResponse;
@@ -25,7 +26,7 @@ public class StoreInventory {
         Inventory inventory = getInventory(order);
         int purchaseQuantity = order.getPurchaseQuantity();
 
-        if (!promotionManager.hasPromotion(order)) {
+        if (!promotionManager.canPromotion(order)) {
             inventory.consumeRegularInventory(purchaseQuantity);
             return Optional.empty();
         }
@@ -36,17 +37,26 @@ public class StoreInventory {
     private Optional<Order> processPromotionalPurchase(Order order, PromotionManager promotionManager,
                                                        Inventory inventory) {
         Optional<Order> giftOrder = createGiftOrder(order, promotionManager, inventory);
-
+        handlePossibleBonusGift(order, promotionManager);
         if (giftOrder.isEmpty()) {
             handleNonPromotionalOrder(order.getPurchaseQuantity(), inventory);
             return giftOrder;
         }
 
-        int regularQuantity = calculateRegularQuantity(order.getPurchaseQuantity(), giftOrder);
-        handleRegularInventory(order.getProduct(), regularQuantity, inventory);
-        consumeInventory(regularQuantity, giftOrder.get().getPurchaseQuantity(), inventory);
-
+        handleInventoryAdjustments(order, giftOrder, inventory);
         return giftOrder;
+    }
+
+    private void handlePossibleBonusGift(Order order, PromotionManager promotionManager) {
+        Promotion promotion = promotionManager.getPromotion(order.getProduct()).orElse(null);
+        if (promotion == null) {
+            return;
+        }
+
+        int possibleGift = promotion.canGift(order.getPurchaseQuantity());
+        if (possibleGift > 0 && promptGift(order.getProduct().getName(), possibleGift)) {
+            order.plusQuantity(possibleGift);
+        }
     }
 
     private Optional<Order> createGiftOrder(Order order, PromotionManager promotionManager, Inventory inventory) {
@@ -56,7 +66,13 @@ public class StoreInventory {
 
     private void handleNonPromotionalOrder(int purchaseQuantity, Inventory inventory) {
         inventory.checkRegularInventory(purchaseQuantity);
-        inventory.consumePromotionalInventory(purchaseQuantity); // Assuming this is correct; adjust as needed
+        inventory.consumeRegularInventory(purchaseQuantity);
+    }
+
+    private void handleInventoryAdjustments(Order order, Optional<Order> giftOrder, Inventory inventory) {
+        int regularQuantity = calculateRegularQuantity(order.getPurchaseQuantity(), giftOrder);
+        handleRegularInventory(order.getProduct(), regularQuantity, inventory);
+        consumeInventory(regularQuantity, giftOrder.map(Order::getPurchaseQuantity).orElse(0), inventory);
     }
 
     private int calculateRegularQuantity(int purchaseQuantity, Optional<Order> giftOrder) {
@@ -64,13 +80,13 @@ public class StoreInventory {
     }
 
     private void handleRegularInventory(Product product, int regularQuantity, Inventory inventory) {
-        validateInventory(product, regularQuantity, inventory);
+        validateInventory(regularQuantity, inventory);
         if (regularQuantity > 0 && !promptPromotionLimit(product.getName(), regularQuantity)) {
             throw new InvalidOrderException(ErrorMessage.CANCLE_ORDER.getMessage());
         }
     }
 
-    private void validateInventory(Product product, int regularQuantity, Inventory inventory) {
+    private void validateInventory(int regularQuantity, Inventory inventory) {
         inventory.checkRegularInventory(regularQuantity);
     }
 
@@ -83,6 +99,17 @@ public class StoreInventory {
         while (true) {
             try {
                 YesNoRequest input = InputView.promotionLimit(name, regularQuantity);
+                return input.response();
+            } catch (StoreException e) {
+                OutputView.printError(e.getMessage());
+            }
+        }
+    }
+
+    private boolean promptGift(String name, int bonus) {
+        while (true) {
+            try {
+                YesNoRequest input = InputView.gift(name, bonus);
                 return input.response();
             } catch (StoreException e) {
                 OutputView.printError(e.getMessage());

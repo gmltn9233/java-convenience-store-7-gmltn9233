@@ -14,11 +14,6 @@ public class PromotionManager {
         this.productPromotions = productPromotions;
     }
 
-    public boolean hasPromotion(Order order) {
-        Product product = order.getProduct();
-        return productPromotions.containsKey(product);
-    }
-
     public String getPromotionName(Product product) {
         return getPromotion(product).map(Promotion::getName).orElse("");
     }
@@ -43,5 +38,20 @@ public class PromotionManager {
     public Optional<Promotion> getPromotion(Product product) {
         return Optional.ofNullable(productPromotions.get(product));
     }
+
+    public boolean canPromotion(Order order) {
+        if (hasPromotion(order)) {
+            Promotion promotion = getPromotion(order.getProduct()).get();
+            PromotionTime promotionTime = promotion.promotionTime;
+            return promotionTime.validatePurchaseTime();
+        }
+        return false;
+    }
+
+    private boolean hasPromotion(Order order) {
+        Product product = order.getProduct();
+        return productPromotions.containsKey(product);
+    }
+
 
 }

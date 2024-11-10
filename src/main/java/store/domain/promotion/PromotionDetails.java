@@ -14,6 +14,17 @@ public class PromotionDetails {
         return completeSets * bonus;
     }
 
+    public int canGift(int purchaseQuantity) {
+        int completeSets = purchaseQuantity / (buy + bonus);
+        if (purchaseQuantity < buy + bonus) {
+            completeSets = purchaseQuantity;
+        }
+        if (completeSets + bonus == (buy + bonus)) {
+            return bonus;
+        }
+        return 0;
+    }
+
     public int getCriteria() {
         return buy + bonus;
     }

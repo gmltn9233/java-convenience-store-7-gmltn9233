@@ -19,6 +19,14 @@ public class InputView {
         return YesNoRequest.from(input());
     }
 
+    public static YesNoRequest gift(String name, int quantity) {
+        System.out.println(String.format(
+                "현재 %s은(는) %d개를 무료로 더 받을 수 있습니다. 추가하시겠습니까? (Y/N)",
+                name, quantity
+        ));
+        return YesNoRequest.from(input());
+    }
+
     public static YesNoRequest membership() {
         System.out.println("멤버십 할인을 받으시겠습니까? (Y/N)");
         return YesNoRequest.from(input());
