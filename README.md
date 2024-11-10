@@ -377,3 +377,12 @@ Inventory 객체는 프로모션 수량과 일반 수량을 멤버로 가진다.
 
 ### StoreInventory
 StoreInventory 객체는 Product를 key로, Inventory를 value로 하는 Map을 멤버로 가진다.
+
+### Promotion
+Promotion 객체는 프로모션 이름, 프로모션 세부사항(PromotionDetails), 프로모션 시간(PromotionTime)을 멤버로 가진다.
+
+### PromotionDetails
+PromotionDetails 객체는 프로모션 정보 (buy개를 사면 bonus개를 준다)를 멤버로 가진다.
+
+### PromotionTime
+PromotionTime 객체는 프로모션의 시작시간과 종료시간을 멤버로 가진다.
