@@ -19,4 +19,8 @@ public class OutputView {
     public static void printReceipt(ReceiptResponse response) {
         System.out.println(response.toString());
     }
+
+    public static void printError(String message) {
+        System.out.println(message);
+    }
 }
