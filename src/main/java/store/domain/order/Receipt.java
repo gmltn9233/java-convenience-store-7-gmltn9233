@@ -26,7 +26,14 @@ public class Receipt {
     public int calculateMembershipDiscount() {
         int totalPurchaseAmount = productOrders.getTotalPurchaseAmount();
         int promotionalPurchase = giftOrders.getPromotionalDiscount();
-        return membership ? (int) ((totalPurchaseAmount - promotionalPurchase) * 0.3) : 0;
+        int discount = 0;
+
+        if (membership) {
+            discount = (int) ((totalPurchaseAmount - promotionalPurchase) * 0.3);
+        }
+
+        return Math.min(discount, 8000);
     }
+
 
 }
