@@ -386,3 +386,6 @@ PromotionDetails 객체는 프로모션 정보 (buy개를 사면 bonus개를 준
 
 ### PromotionTime
 PromotionTime 객체는 프로모션의 시작시간과 종료시간을 멤버로 가진다.
+
+### PromotionManager
+PromotionManager 객체는 Product를 Key로, Promotion을 value로 하는 Map을 멤버로 가진다.
