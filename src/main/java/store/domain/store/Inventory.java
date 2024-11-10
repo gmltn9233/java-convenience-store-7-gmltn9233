@@ -32,13 +32,21 @@ public class Inventory {
         return Math.min(promotionalInventory, purchaseQuantity);
     }
 
-    public void consumeRegularInventory(int purchaseQuantity) {
+    public void checkRegularInventory(int purchaseQuantity) {
         validatePurchaseQuantity(regularInventory, purchaseQuantity);
+    }
+
+    public void checkPromotionalInventory(int purchaseQuantity) {
+        validatePurchaseQuantity(promotionalInventory, purchaseQuantity);
+    }
+
+    public void consumeRegularInventory(int purchaseQuantity) {
+        checkRegularInventory(purchaseQuantity);
         regularInventory -= purchaseQuantity;
     }
 
     public void consumePromotionalInventory(int purchaseQuantity) {
-        validatePurchaseQuantity(promotionalInventory, purchaseQuantity);
+        checkPromotionalInventory(purchaseQuantity);
         promotionalInventory -= purchaseQuantity;
     }
 

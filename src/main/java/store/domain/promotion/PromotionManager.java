@@ -36,7 +36,8 @@ public class PromotionManager {
             return Optional.empty();
         }
         int promotionQuantity = promotion.getCriteria() * promotionBenefit;
-        return Optional.of(new PromotionOrder(product, promotionBenefit, promotionQuantity));
+
+        return Optional.of(new PromotionOrder(product, promotionQuantity, promotionBenefit));
     }
 
     public Optional<Promotion> getPromotion(Product product) {
