@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import store.domain.order.Order;
 import store.domain.promotion.PromotionManager;
+import store.dto.response.StoreResponse;
 
 public class StoreInventory {
     private final Map<Product, Inventory> productInventory;
@@ -48,4 +49,28 @@ public class StoreInventory {
         Product product = order.getProduct();
         return productInventory.get(product);
     }
+
+    public Product findProductByName(String name) {
+        return productInventory.keySet().stream()
+                .filter(product -> product.getName().equals(name))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public List<StoreResponse> getProductInventoryDetails(PromotionManager promotionManager) {
+        return productInventory.entrySet().stream()
+                .map(entry -> {
+                    Product product = entry.getKey();
+                    Inventory inventory = entry.getValue();
+                    String promotionName = promotionManager.getPromotionName(product);
+                    return StoreResponse.from(
+                            product,
+                            inventory.getPromotionalInventory(),
+                            inventory.getRegularInventory(),
+                            promotionName
+                    );
+                })
+                .collect(Collectors.toList());
+    }
+
 }

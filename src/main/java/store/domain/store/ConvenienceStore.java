@@ -29,4 +29,13 @@ public class ConvenienceStore {
 
         return new Receipt(orders, giftOrders);
     }
+
+    public StoreInventory getStoreInventory() {
+        return storeInventory;
+    }
+
+    public PromotionManager getPromotionManager() {
+        return promotionManager;
+    }
+
 }

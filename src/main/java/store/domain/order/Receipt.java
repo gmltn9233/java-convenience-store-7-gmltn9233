@@ -11,7 +11,22 @@ public class Receipt {
         this.giftOrders = giftOrders;
     }
 
+    public Orders getProductOrders() {
+        return productOrders;
+    }
+
+    public Orders getGiftOrders() {
+        return giftOrders;
+    }
+
     public void applyMembership() {
         membership = true;
     }
+
+    public int calculateMembershipDiscount() {
+        int totalPurchaseAmount = productOrders.getTotalPurchaseAmount();
+        int promotionalPurchase = giftOrders.getPromotionalDiscount();
+        return membership ? (int) ((totalPurchaseAmount - promotionalPurchase) * 0.3) : 0;
+    }
+
 }

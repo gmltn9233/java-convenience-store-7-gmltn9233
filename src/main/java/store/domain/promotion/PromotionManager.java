@@ -19,6 +19,10 @@ public class PromotionManager {
         return productPromotions.containsKey(product);
     }
 
+    public String getPromotionName(Product product) {
+        return getPromotion(product).map(Promotion::getName).orElse("");
+    }
+
     public Optional<Order> createGiftOrder(Product product, int purchaseQuantity, Inventory inventory) {
         Promotion promotion = productPromotions.get(product);
 
@@ -33,6 +37,10 @@ public class PromotionManager {
         }
         int promotionQuantity = promotion.getCriteria() * promotionBenefit;
         return Optional.of(new PromotionOrder(product, promotionBenefit, promotionQuantity));
+    }
+
+    public Optional<Promotion> getPromotion(Product product) {
+        return Optional.ofNullable(productPromotions.get(product));
     }
 
 }

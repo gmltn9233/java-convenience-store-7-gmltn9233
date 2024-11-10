@@ -1,6 +1,7 @@
 package store.domain.order;
 
 import store.domain.store.Product;
+import store.dto.response.ReceiptResponse.OrderDetail;
 
 public class Order {
     private final Product product;
@@ -17,6 +18,10 @@ public class Order {
 
     public int getPurchaseQuantity() {
         return this.purchaseQuantity;
+    }
+
+    public OrderDetail toOrderDetail() {
+        return OrderDetail.from(product.getName(), purchaseQuantity, product.getPrice());
     }
 
 }
