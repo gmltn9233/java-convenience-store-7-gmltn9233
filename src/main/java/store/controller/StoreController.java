@@ -40,7 +40,7 @@ public class StoreController {
     private Receipt getReceipt() {
         while (true) {
             try {
-                OrdersRequest userOrders = InputView.Orders();
+                OrdersRequest userOrders = InputView.orders();
                 Orders orders = storeService.generateOrders(userOrders);
                 return storeService.generateReceipt(orders);
             } catch (StoreException e) {
