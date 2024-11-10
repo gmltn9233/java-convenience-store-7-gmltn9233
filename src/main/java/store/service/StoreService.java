@@ -1,16 +1,12 @@
 package store.service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 import store.common.exception.ErrorMessage;
 import store.common.exception.InvalidOrderException;
 import store.domain.order.Order;
 import store.domain.order.Orders;
-import store.domain.order.PromotionOrder;
 import store.domain.order.Receipt;
-import store.domain.promotion.Promotion;
 import store.domain.promotion.PromotionManager;
 import store.domain.store.ConvenienceStore;
 import store.domain.store.Product;
@@ -24,20 +20,21 @@ public class StoreService {
 
     private final ConvenienceStore convenienceStore;
 
-    public StoreService(ConvenienceStore convenienceStore){
+    public StoreService(ConvenienceStore convenienceStore) {
         this.convenienceStore = convenienceStore;
     }
+
     public Orders generateOrders(OrdersRequest ordersRequest) {
         StoreInventory storeInventory = convenienceStore.getStoreInventory();
 
         List<Order> orders = ordersRequest.orders().entrySet().stream()
-                .map(entry -> createOrder(storeInventory, entry.getKey(), entry.getValue()))
+                .map(entry -> generateOrder(storeInventory, entry.getKey(), entry.getValue()))
                 .collect(Collectors.toList());
 
         return new Orders(orders);
     }
 
-    private Order createOrder(StoreInventory storeInventory, String productName, int quantity) {
+    private Order generateOrder(StoreInventory storeInventory, String productName, int quantity) {
         Product product = storeInventory.findProductByName(productName);
 
         if (product == null) {
@@ -54,7 +51,7 @@ public class StoreService {
     }
 
 
-    public ReceiptResponse createReceiptResponse(Receipt receipt) {
+    public ReceiptResponse generateReceiptResponse(Receipt receipt) {
         List<OrderDetail> productOrderDetails = receipt.getProductOrders().toOrderDetails();
         List<OrderDetail> giftOrderDetails = receipt.getGiftOrders().toGiftOrderDetails();
 
@@ -74,7 +71,7 @@ public class StoreService {
     }
 
 
-    public Receipt generateReceipt(Orders orders){
+    public Receipt generateReceipt(Orders orders) {
         return convenienceStore.purchaseProducts(orders);
     }
 }
