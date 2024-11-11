@@ -9,7 +9,9 @@ public enum ErrorMessage {
     CANCLE_ORDER("주문을 취소하셨습니다. 다시 주문해주세요."),
     INVALID_RESPONSE("응답은 Y 혹은 N으로 이루어져야 합니다."),
     INVALID_QUANTITY("재고 수량을 초과하여 구매할 수 없습니다. 다시 입력해 주세요."),
-    READ_FILE_ERROR("MD 파일을 읽는 과정에서 에러가 발생했습니다.");
+    READ_FILE_ERROR("MD 파일을 읽는 과정에서 에러가 발생했습니다."),
+    MUST_BE_POSITIVE_INTEGER("양수여야 합니다."),
+    INVALID_NUMBER_FORMAT("숫자 형식이 아닙니다.");
 
     private final String message;
 

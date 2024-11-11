@@ -6,6 +6,8 @@ import java.nio.file.Paths;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import store.common.exception.ErrorMessage;
+import store.common.exception.StoreException;
 import store.domain.promotion.Promotion;
 import store.domain.promotion.PromotionManager;
 import store.domain.store.ConvenienceStore;
@@ -30,7 +32,7 @@ public class StoreLoader {
         Map<Product, Inventory> inventoryMap = new LinkedHashMap<>();
         Map<Product, Promotion> promotionMap = new LinkedHashMap<>();
 
-        for (int i = 1; i < lines.size(); i++) { // Assuming the first line is a header
+        for (int i = 1; i < lines.size(); i++) {
             parseProductLine(lines.get(i), inventoryMap, promotionMap, promotions);
         }
 
@@ -71,7 +73,7 @@ public class StoreLoader {
         try {
             return Integer.parseInt(value);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("Invalid " + fieldName + ": " + value);
+            throw new StoreException(ErrorMessage.INVALID_NUMBER_FORMAT.getMessage());
         }
     }
 

@@ -8,6 +8,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import store.common.exception.ErrorMessage;
+import store.common.exception.StoreException;
 import store.domain.promotion.Promotion;
 import store.domain.promotion.PromotionDetails;
 import store.domain.promotion.PromotionTime;
@@ -29,7 +31,7 @@ public class PromotionLoader {
 
     private List<Promotion> parsePromotions(List<String> lines) {
         List<Promotion> promotions = new ArrayList<>();
-        for (int i = 1; i < lines.size(); i++) { // Skip header line if any
+        for (int i = 1; i < lines.size(); i++) {
             String line = lines.get(i).trim();
             if (!line.isEmpty()) {
                 try {
@@ -61,11 +63,11 @@ public class PromotionLoader {
         try {
             int result = Integer.parseInt(value);
             if (result <= 0) {
-                throw new IllegalArgumentException(fieldName + " must be a positive integer.");
+                throw new StoreException(ErrorMessage.MUST_BE_POSITIVE_INTEGER.getMessage());
             }
             return result;
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException(fieldName + " must be a valid integer.");
+            throw new StoreException(ErrorMessage.INVALID_NUMBER_FORMAT.getMessage());
         }
     }
 
